@@ -10,11 +10,25 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Future<void> getData() async {
-    // Get the data from the API
-    Response response = await Dio().get(
-        "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist.json");
-
-    print(response.statusCode);
+    try {
+      // Get the data from the API
+      Response response = await Dio().get(
+          "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist.json");
+      print(response.statusCode);
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Server Error"),
+              content: Text("An error occurred while fetching data."),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context), child: Text("OK"))
+              ],
+            );
+          });
+    }
   }
 
   @override
