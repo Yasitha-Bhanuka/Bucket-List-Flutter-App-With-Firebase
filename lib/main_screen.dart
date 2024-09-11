@@ -9,22 +9,27 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  List<dynamic> bucketListData = [];
+
   Future<void> getData() async {
     try {
       // Get the data from the API
       Response response = await Dio().get(
           "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist.json");
-      print(response.statusCode);
+
+      bucketListData = response.data;
+      setState(() {});
     } catch (e) {
       showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("Server Error"),
-              content: Text("An error occurred while fetching data."),
+              title: const Text("Server Error"),
+              content: const Text("An error occurred while fetching data."),
               actions: [
                 TextButton(
-                    onPressed: () => Navigator.pop(context), child: Text("OK"))
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("OK"))
               ],
             );
           });
@@ -37,6 +42,29 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           title: const Text('Bucket List'),
         ),
-        body: ElevatedButton(onPressed: getData, child: Text("Get Data")));
+        body: Column(
+          children: [
+            ElevatedButton(onPressed: getData, child: const Text("Get Data")),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: bucketListData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: NetworkImage(
+                              bucketListData[index]["image"] ?? ""),
+                        ),
+                        title: Text(bucketListData[index]["item"] ?? ""),
+                        trailing: Text(
+                            bucketListData[index]["cost"].toString() ?? ""),
+                      ),
+                    );
+                  }),
+            )
+          ],
+        ));
   }
 }
