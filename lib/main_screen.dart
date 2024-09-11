@@ -37,34 +37,43 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void initState() {
+    getData();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Bucket List'),
-        ),
-        body: Column(
-          children: [
-            ElevatedButton(onPressed: getData, child: const Text("Get Data")),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: bucketListData.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage(
-                              bucketListData[index]["image"] ?? ""),
-                        ),
-                        title: Text(bucketListData[index]["item"] ?? ""),
-                        trailing: Text(
-                            bucketListData[index]["cost"].toString() ?? ""),
-                      ),
-                    );
-                  }),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: getData,
+                child: const Icon(Icons.refresh),
+              ),
             )
           ],
-        ));
+        ),
+        body: ListView.builder(
+            itemCount: bucketListData.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                        NetworkImage(bucketListData[index]["image"] ?? ""),
+                  ),
+                  title: Text(bucketListData[index]["item"] ?? ""),
+                  trailing:
+                      Text(bucketListData[index]["cost"].toString() ?? ""),
+                ),
+              );
+            }));
   }
 }
