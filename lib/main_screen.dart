@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
     } catch (e) {
       isLoading = false;
       showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -53,6 +54,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/add");
+          },
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add),
+        ),
         appBar: AppBar(
           title: const Text('Bucket List'),
         ),
@@ -61,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
             await getData();
           },
           child: isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
                   itemCount: bucketListData.length,
                   itemBuilder: (BuildContext context, int index) {
