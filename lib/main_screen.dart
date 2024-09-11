@@ -11,15 +11,22 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<dynamic> bucketListData = [];
 
+  bool isLoading = false;
+
   Future<void> getData() async {
+    setState(() {
+      isLoading = true;
+    });
     try {
       // Get the data from the API
       Response response = await Dio().get(
           "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist.json");
 
       bucketListData = response.data;
+      isLoading = false;
       setState(() {});
     } catch (e) {
+      isLoading = false;
       showDialog(
           context: context,
           builder: (context) {
@@ -53,23 +60,25 @@ class _MainScreenState extends State<MainScreen> {
           onRefresh: () async {
             await getData();
           },
-          child: ListView.builder(
-              itemCount: bucketListData.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 25,
-                      backgroundImage:
-                          NetworkImage(bucketListData[index]["image"] ?? ""),
-                    ),
-                    title: Text(bucketListData[index]["item"] ?? ""),
-                    trailing:
-                        Text(bucketListData[index]["cost"].toString() ?? ""),
-                  ),
-                );
-              }),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: bucketListData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: NetworkImage(
+                              bucketListData[index]["image"] ?? ""),
+                        ),
+                        title: Text(bucketListData[index]["item"] ?? ""),
+                        trailing: Text(
+                            bucketListData[index]["cost"].toString() ?? ""),
+                      ),
+                    );
+                  }),
         ));
   }
 }
