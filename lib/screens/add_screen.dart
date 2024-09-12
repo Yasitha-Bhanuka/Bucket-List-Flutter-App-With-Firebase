@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class AddBucketListScreen extends StatefulWidget {
@@ -56,6 +57,7 @@ class _AddBucketListScreenState extends State<AddBucketListScreen> {
                     if (value == null || value.isEmpty) {
                       return "This must not be empty";
                     }
+                    return null;
                   },
                   controller: itemText,
                   decoration: const InputDecoration(label: Text("Item")),
@@ -72,7 +74,9 @@ class _AddBucketListScreenState extends State<AddBucketListScreen> {
                     if (value.toString().length < 3) {
                       return "Must be more than 3 characters";
                     }
+                    return null;
                   },
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   controller: costText,
                   decoration:
                       const InputDecoration(label: Text("Estimated Cost")),
@@ -89,6 +93,7 @@ class _AddBucketListScreenState extends State<AddBucketListScreen> {
                     if (value.toString().length < 3) {
                       return "Must be more than 3 characters";
                     }
+                    return null;
                   },
                   controller: imageUrlText,
                   decoration: const InputDecoration(label: Text("Image Url")),
