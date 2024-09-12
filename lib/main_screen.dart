@@ -83,7 +83,10 @@ class _MainScreenState extends State<MainScreen> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return ViewItemScreen();
+                            return ViewItemScreen(
+                              title: bucketListData[index]["item"] ?? "",
+                              image: bucketListData[index]["image"] ?? "",
+                            );
                           }));
                         },
                         leading: CircleAvatar(
