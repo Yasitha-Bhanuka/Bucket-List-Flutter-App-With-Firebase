@@ -1,4 +1,3 @@
-
 ## Project Overview
 
 This Flutter project serves as a starting point for building Flutter applications. It includes various features and functionalities that can be used as a reference or a template for your own projects.
@@ -41,84 +40,57 @@ This Flutter project serves as a starting point for building Flutter application
 
 ## App Icon
 
-![alt text](assets/screenshots/AppIcon.png)
+<img src="assets/screenshots/AppIcon.png" alt="App Icon" width="200"/>
 
 ## App Welcome Screen
 
-![alt text](assets/screenshots/Welcome.png)
+<img src="assets/screenshots/Welcome.png" alt="Welcome Screen" width="200"/>
 
 ## Bucket List 
 
-![alt text](assets/screenshots/List.png)
+<img src="assets/screenshots/List.png" alt="Bucket List" width="200"/>
 
 ## Item View
 
-![alt text](assets/screenshots/PictureView.png)
+<img src="assets/screenshots/PictureView.png" alt="Item View" width="200"/>
 
 ## Item Manage
 
-![alt text](assets/screenshots/Delete.png)
+<img src="assets/screenshots/Delete.png" alt="Item Manage" width="200"/>
 
 ## Item Delete Alert
 
-![alt text](assets/screenshots/deletealert.png)
+<img src="assets/screenshots/deletealert.png" alt="Item Delete Alert" width="200"/>
 
 ## Item After Deleting
 
-![alt text](assets/screenshots/afterdelete.png)
+<img src="assets/screenshots/afterdelete.png" alt="Item After Deleting" width="200"/>
 
 ## Item Adding
 
-![alt text](assets/screenshots/addingnewlist.png)
+<img src="assets/screenshots/addingnewlist.png" alt="Item Adding" width="200"/>
 
 ## Item Adding From Validation
 
-![alt text](assets/screenshots/Validation.png)
+<img src="assets/screenshots/Validation.png" alt="Item Adding From Validation" width="200"/>
 
 ## Input Details Correctly
 
-![alt text](assets/screenshots/inputdetailscorrect.png)
+<img src="assets/screenshots/inputdetailscorrect.png" alt="Input Details Correctly" width="200"/>
 
 ## After Added Item
 
-![alt text](assets/screenshots/afteradding.png)
+<img src="assets/screenshots/afteradding.png" alt="After Added Item" width="200"/>
 
 ## When Reloading App Is On Operational Task
 
-![alt text](assets/screenshots/whenrefreshing.png)
+<img src="assets/screenshots/whenrefreshing.png" alt="When Reloading App Is On Operational Task" width="200"/>
 
 ## When Bucket List Is Empty
 
-![alt text](assets/screenshots/BucketEmpty.png)
+<img src="assets/screenshots/BucketEmpty.png" alt="When Bucket List Is Empty" width="200"/>
 
 
 ## Conclusion
 
 This project demonstrates the use of Flutter, Firebase, and Dio to build a Flutter application with various features and functionalities. It provides a solid foundation for building your own Flutter projects. Feel free to explore the code and use it as a reference for your own projects.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
