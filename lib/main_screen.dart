@@ -101,6 +101,15 @@ class _MainScreenState extends State<MainScreen> {
         ),
         appBar: AppBar(
           title: const Text('Bucket List'),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: getData,
+                child: const Icon(Icons.refresh),
+              ),
+            )
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: () async {
