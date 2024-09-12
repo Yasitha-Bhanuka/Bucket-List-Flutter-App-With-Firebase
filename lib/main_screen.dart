@@ -48,39 +48,46 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget ListDataWidget() {
-    return ListView.builder(
-        itemCount: bucketListData.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: (bucketListData[index] is Map)
-                ? ListTile(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return ViewItemScreen(
-                          index: index,
-                          title: bucketListData[index]["item"] ?? "",
-                          image: bucketListData[index]["image"] ?? "",
-                        );
-                      })).then((value) {
-                        if (value == "refresh") {
-                          getData();
-                        }
-                      });
-                    },
-                    leading: CircleAvatar(
-                      radius: 25,
-                      backgroundImage:
-                          NetworkImage(bucketListData[index]?["image"] ?? ""),
-                    ),
-                    title: Text(bucketListData[index]?["item"] ?? ""),
-                    trailing:
-                        Text(bucketListData[index]?["cost"].toString() ?? ""),
-                  )
-                : SizedBox(),
-          );
-        });
+    List<dynamic> filteredList = bucketListData
+        .where((element) => !(element?["completed"]) ?? false)
+        .toList();
+
+    return filteredList.length < 1
+        ? Center(child: Text("No Data On Bucket List"))
+        : ListView.builder(
+            itemCount: bucketListData.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: (bucketListData[index] is Map &&
+                        (!(bucketListData[index]?["completed"]) ?? false))
+                    ? ListTile(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ViewItemScreen(
+                              index: index,
+                              title: bucketListData[index]["item"] ?? "",
+                              image: bucketListData[index]["image"] ?? "",
+                            );
+                          })).then((value) {
+                            if (value == "refresh") {
+                              getData();
+                            }
+                          });
+                        },
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: NetworkImage(
+                              bucketListData[index]?["image"] ?? ""),
+                        ),
+                        title: Text(bucketListData[index]?["item"] ?? ""),
+                        trailing: Text(
+                            bucketListData[index]?["cost"].toString() ?? ""),
+                      )
+                    : SizedBox(),
+              );
+            });
   }
 
   Widget errorWidget({required String errorText}) {
@@ -128,9 +135,7 @@ class _MainScreenState extends State<MainScreen> {
               ? const Center(child: CircularProgressIndicator())
               : isError
                   ? errorWidget(errorText: "Error Getting Bucket List Data")
-                  : bucketListData.length < 1
-                      ? Text("No data in bucket list")
-                      : ListDataWidget(),
+                  : ListDataWidget(),
         ));
   }
 }

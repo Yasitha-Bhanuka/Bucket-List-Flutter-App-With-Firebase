@@ -17,9 +17,8 @@ class ViewItemScreen extends StatefulWidget {
 }
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
-  void deleteData() async {
+  Future<void> deleteData() async {
     Navigator.pop(context);
-    print("One time pop");
     // Delete the item from the API
     try {
       // Get the data from the API
@@ -27,7 +26,22 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       Response response = await Dio().delete(
           "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist/${widget.index}.json");
       Navigator.pop(context, "refresh");
-      print("Second time pop");
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> markAsComplete() async {
+    // Delete the item from the API
+    try {
+      Map<String, dynamic> data = {"completed": true};
+
+      // Get the data from the API
+      // ignore: unused_local_variable
+      Response response = await Dio().patch(
+          "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist/${widget.index}.json",
+          data: data);
+      Navigator.pop(context, "refresh");
     } catch (e) {
       print(e);
     }
@@ -60,9 +74,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             ],
                           );
                         })
-                  }
-                else
-                  {print(value)}
+                  },
+                if (value == 2) {markAsComplete()}
               },
               itemBuilder: (context) {
                 return [
@@ -81,7 +94,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         ),
         body: Column(
           children: [
-            Text(widget.index.toString()),
             Container(
               height: 300,
               width: double.infinity,
