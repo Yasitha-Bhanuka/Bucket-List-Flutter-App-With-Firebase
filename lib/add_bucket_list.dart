@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AddBucketListScreen extends StatefulWidget {
   int newIndex;
   AddBucketListScreen({super.key, required this.newIndex});
@@ -37,41 +38,79 @@ class _AddBucketListScreenState extends State<AddBucketListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var addFrom = GlobalKey<FormState>();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Add Bucket List"),
         ),
-        body: Column(
-          children: [
-            TextField(
-              controller: itemText,
-              decoration: InputDecoration(label: Text("Item")),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: costText,
-              decoration: InputDecoration(label: Text("Estimated Cost")),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: imageUrlText,
-              decoration: InputDecoration(label: Text("Image Url")),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
+            key: addFrom,
+            child: Column(
               children: [
-                Expanded(
-                    child: ElevatedButton(
-                        onPressed: addData, child: Text("Add Item"))),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "This must not be empty";
+                    }
+                  },
+                  controller: itemText,
+                  decoration: const InputDecoration(label: Text("Item")),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "This must not be empty";
+                    }
+                    if (value.toString().length < 3) {
+                      return "Must be more than 3 characters";
+                    }
+                  },
+                  controller: costText,
+                  decoration:
+                      const InputDecoration(label: Text("Estimated Cost")),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "This must not be empty";
+                    }
+                    if (value.toString().length < 3) {
+                      return "Must be more than 3 characters";
+                    }
+                  },
+                  controller: imageUrlText,
+                  decoration: const InputDecoration(label: Text("Image Url")),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (addFrom.currentState!.validate()) {
+                                addData();
+                              }
+                            },
+                            child: const Text("Add Item"))),
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ));
   }
 }

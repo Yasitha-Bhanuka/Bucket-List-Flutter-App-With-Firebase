@@ -47,6 +47,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
   }
 
+  // ignore: non_constant_identifier_names
   Widget ListDataWidget() {
     List<dynamic> filteredList = bucketListData
         .where((element) => !(element?["completed"] ?? false))
@@ -58,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
             itemCount: bucketListData.length,
             itemBuilder: (BuildContext context, int index) {
               return (bucketListData[index] is Map &&
-                      (!(bucketListData[index]?["completed"]) ?? false))
+                      (!(bucketListData[index]?["completed"] ?? false)))
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
