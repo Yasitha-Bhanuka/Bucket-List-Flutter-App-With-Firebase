@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ViewItemScreen extends StatefulWidget {
   String title;
   String image;
@@ -22,6 +23,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     // Delete the item from the API
     try {
       // Get the data from the API
+      // ignore: unused_local_variable
       Response response = await Dio().delete(
           "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist/${widget.index}.json");
       Navigator.pop(context);
@@ -35,7 +37,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('${widget.title}'),
+          title: Text(widget.title),
           actions: [
             PopupMenuButton(
               onSelected: (value) => {
@@ -45,15 +47,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text("Alert"),
-                            content: Text("Are you sure to delete?"),
+                            title: const Text("Alert"),
+                            content: const Text("Are you sure to delete?"),
                             actions: [
                               InkWell(
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text("No")),
-                              InkWell(onTap: deleteData, child: Text("Yes")),
+                                  child: const Text("No")),
+                              InkWell(
+                                  onTap: deleteData, child: const Text("Yes")),
                             ],
                           );
                         })
@@ -63,11 +66,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               },
               itemBuilder: (context) {
                 return [
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     value: 1,
                     child: Text("Delete"),
                   ),
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     value: 2,
                     child: Text("Mark as done"),
                   )
