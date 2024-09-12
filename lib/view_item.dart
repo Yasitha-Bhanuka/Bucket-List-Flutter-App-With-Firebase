@@ -26,7 +26,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       // ignore: unused_local_variable
       Response response = await Dio().delete(
           "https://flutterapitesing-default-rtdb.firebaseio.com/bucketlist/${widget.index}.json");
-      Navigator.pop(context);
+      Navigator.pop(context, "refresh");
       print("Second time pop");
     } catch (e) {
       print(e);
