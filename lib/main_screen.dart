@@ -49,19 +49,19 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget ListDataWidget() {
     List<dynamic> filteredList = bucketListData
-        .where((element) => !(element?["completed"]) ?? false)
+        .where((element) => !(element?["completed"] ?? false))
         .toList();
 
-    return filteredList.length < 1
-        ? Center(child: Text("No Data On Bucket List"))
+    return filteredList.isEmpty
+        ? const Center(child: Text("No Data On Bucket List"))
         : ListView.builder(
             itemCount: bucketListData.length,
             itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: (bucketListData[index] is Map &&
-                        (!(bucketListData[index]?["completed"]) ?? false))
-                    ? ListTile(
+              return (bucketListData[index] is Map &&
+                      (!(bucketListData[index]?["completed"]) ?? false))
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
@@ -84,9 +84,9 @@ class _MainScreenState extends State<MainScreen> {
                         title: Text(bucketListData[index]?["item"] ?? ""),
                         trailing: Text(
                             bucketListData[index]?["cost"].toString() ?? ""),
-                      )
-                    : SizedBox(),
-              );
+                      ),
+                    )
+                  : const SizedBox();
             });
   }
 
@@ -95,9 +95,9 @@ class _MainScreenState extends State<MainScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.warning),
+          const Icon(Icons.warning),
           Text(errorText),
-          ElevatedButton(onPressed: () {}, child: Text("Try Again"))
+          ElevatedButton(onPressed: () {}, child: const Text("Try Again"))
         ],
       ),
     );
@@ -109,8 +109,12 @@ class _MainScreenState extends State<MainScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return AddBucketListScreen();
-            }));
+              return AddBucketListScreen(newIndex: bucketListData.length);
+            })).then((value) {
+              if (value == "refresh") {
+                getData();
+              }
+            });
           },
           shape: const CircleBorder(),
           child: const Icon(Icons.add),
