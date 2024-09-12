@@ -15,6 +15,45 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('${widget.title}'),
+          actions: [
+            PopupMenuButton(
+              onSelected: (value) => {
+                if (value == 1)
+                  {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Alert"),
+                            content: Text("Are you sure to delete?"),
+                            actions: [
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("No")),
+                              Text("Yes"),
+                            ],
+                          );
+                        })
+                  }
+                else
+                  {print(value)}
+              },
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: 1,
+                    child: Text("Delete"),
+                  ),
+                  PopupMenuItem(
+                    value: 2,
+                    child: Text("Mark as done"),
+                  )
+                ];
+              },
+            )
+          ],
         ),
         body: Column(
           children: [
